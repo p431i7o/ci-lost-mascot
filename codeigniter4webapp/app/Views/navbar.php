@@ -18,7 +18,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link <?php if(uri_string()=='registro')echo "active";?>" href="<?=base_url('registro');?>">Registro</a>
+                        <a class="nav-link <?php if(uri_string()=='registro' || uri_string()=='registrar_cuenta')echo "active";?>" href="<?=base_url('registro');?>">Registro</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='sesion')echo "active";?>" href="<?=base_url('sesion');?>" >Iniciar Sesi&oacute;n</a> <!-- tabindex="-1"  disabled aria-disabled="true" -->
