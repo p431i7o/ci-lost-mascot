@@ -8,4 +8,12 @@ class Inicio extends Controller
     {
         return view('Inicio');
     }
+
+    public function form_registro(){
+        return view('form_registro');
+    }
+
+    public function legal(){
+        return view('legal');
+    }
 }
