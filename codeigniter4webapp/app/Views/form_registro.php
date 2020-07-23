@@ -124,26 +124,51 @@ echo $this->section('content'); ?>
         <?php if($session->getFlashdata('error')){
             ?>
             <div class="alert-warning"><?= $session->getFlashdata('error'); ?></div>
+
             <?php
         } ?>
         <div class="form-label-group">
             <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required autofocus>
             <label for="nombre">Nombre Completo</label>
+            <?php 
+                if (isset($validation) && $validation->hasError('usuario_nombre'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('usuario_nombre').'</div>';
+                }
+            ?>
         </div>
 
         <div class="form-label-group">
-            <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="N&uacute;mero telef&oacute;nico" required autofocus>
-            <label for="nombre">Tel&eacute;fono</label>
+            <input name="usuario_telefono" type="text" id="telefono" class="form-control" placeholder="N&uacute;mero telef&oacute;nico" required autofocus>
+            <label for="telefono">Tel&eacute;fono</label>
+            <?php 
+                if (isset($validation) && $validation->hasError('usuario_telefono'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('usuario_telefono').'</div>';
+                }
+            ?>
         </div>
 
         <div class="form-label-group">
             <input type="email" id="usuario_email" name="usuario_email" class="form-control" placeholder="Direcci&oacute;n de correo" required autofocus>
             <label for="inputEmail">Correo electr&oacute;nico</label>
+            <?php 
+                if (isset($validation) && $validation->hasError('usuario_email'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('usuario_email').'</div>';
+                }
+            ?>
           </div>
 
         <div class="form-label-group">
             <input type="password" id="usuario_password" name="usuario_password" class="form-control" placeholder="Contrase&ntilde;" required>
             <label for="usuario_password">Contrase&ntilde;a</label>
+            <?php 
+                if (isset($validation) && $validation->hasError('usuario_password'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('usuario_password').'</div>';
+                }
+            ?>
         </div>
         
         <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button>

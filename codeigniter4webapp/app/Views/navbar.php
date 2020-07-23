@@ -6,22 +6,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item <?php if(uri_string()=='Inicio' || uri_string()=='/')echo "active";?>">
                         <a class="nav-link" href="<?= base_url('Inicio'); ?>">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('ayuda'); ?>">Ayuda</a>
+                        <a class="nav-link <?php if(uri_string()=='ayuda')echo "active";?>" href="<?= base_url('ayuda'); ?>">Ayuda</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('legal'); ?>">Legal</a>
+                        <a class="nav-link <?php if(uri_string()=='legal')echo "active";?>" href="<?= base_url('legal'); ?>">Legal</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=base_url('registro');?>">Registro</a>
+                        <a class="nav-link <?php if(uri_string()=='registro')echo "active";?>" href="<?=base_url('registro');?>">Registro</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=base_url('sesion');?>" >Iniciar Sesi&oacute;n</a> <!-- tabindex="-1"  disabled aria-disabled="true" -->
+                        <a class="nav-link <?php if(uri_string()=='sesion')echo "active";?>" href="<?=base_url('sesion');?>" >Iniciar Sesi&oacute;n</a> <!-- tabindex="-1"  disabled aria-disabled="true" -->
                     </li>
                 </ul>
                 <form action="<?= base_url('Buscar');?>" class="form-inline my-2 my-lg-0">

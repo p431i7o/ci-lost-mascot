@@ -34,7 +34,7 @@ $routes->get('/', 'Inicio::index');
 $routes->get('/registro', 'Inicio::form_registro');
 $routes->get('/legal', 'Inicio::legal');
 $routes->post('/registrar_cuenta','Inicio::registrar_cuenta');
-
+$routes->get('/registrar_cuenta','Inicio::form_registro');
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {
