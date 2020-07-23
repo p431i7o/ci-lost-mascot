@@ -33,6 +33,8 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Inicio::index');
 $routes->get('/registro', 'Inicio::form_registro');
 $routes->get('/legal', 'Inicio::legal');
+$routes->post('/registrar_cuenta','Inicio::registrar_cuenta');
+
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {

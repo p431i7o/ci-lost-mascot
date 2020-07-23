@@ -111,7 +111,9 @@ echo $this->section('content'); ?>
         </p>
     </div>
     
-    <form method="POST" class=" col-md-5 form-signin needs-validation accordion"  novalidate action="<?=base_url('registrar_cuenta');?>" >
+    <form method="POST" class=" col-md-5 form-signin needs-validation accordion" novalidate action="<?=base_url('registrar_cuenta');?>" >
+
+        <?= csrf_field() ?>
             <!-- <div class="">
                 <label for="firstName">Nombre Completo:</label>
                 <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
@@ -119,6 +121,11 @@ echo $this->section('content'); ?>
                     Valid first name is required.
                 </div>
             </div> -->
+        <?php if($session->getFlashdata('error')){
+            ?>
+            <div class="alert-warning"><?= $session->getFlashdata('error'); ?></div>
+            <?php
+        } ?>
         <div class="form-label-group">
             <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required autofocus>
             <label for="nombre">Nombre Completo</label>
@@ -139,7 +146,7 @@ echo $this->section('content'); ?>
             <label for="usuario_password">Contrase&ntilde;a</label>
         </div>
         
-        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="validarYEnviar();">Registrarme</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button>
         
     </form>
   </div>

@@ -2,7 +2,8 @@
 
 use CodeIgniter\Controller;
 
-class Inicio extends Controller
+
+class Inicio extends BaseController
 {
     public function index()
     {
@@ -10,7 +11,12 @@ class Inicio extends Controller
     }
 
     public function form_registro(){
-        return view('form_registro');
+        $errores = $this->session->getFlashdata();
+        return view('form_registro',['errores'=>$errores,'session'=>$this->session]);
+    }
+
+    public function registrar_cuenta(){
+        
     }
 
     public function legal(){
