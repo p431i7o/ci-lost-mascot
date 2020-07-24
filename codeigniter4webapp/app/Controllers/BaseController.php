@@ -15,7 +15,7 @@ namespace App\Controllers;
  */
 
 use CodeIgniter\Controller;
-
+use CodeIgniter\HTTP\RequestInterface;
 class BaseController extends Controller
 {
 
@@ -36,6 +36,7 @@ class BaseController extends Controller
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
         $this->session = \Config\Services::session();
+        $this->request = $request;
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------

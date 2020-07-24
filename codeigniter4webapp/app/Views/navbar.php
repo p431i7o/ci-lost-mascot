@@ -16,13 +16,22 @@
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='legal')echo "active";?>" href="<?= base_url('legal'); ?>">Legal</a>
                     </li>
-
+                    <?php if(!session('sesion_iniciada')){ ?>
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='registro' || uri_string()=='registrar_cuenta')echo "active";?>" href="<?=base_url('registro');?>">Registro</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='sesion')echo "active";?>" href="<?=base_url('sesion');?>" >Iniciar Sesi&oacute;n</a> <!-- tabindex="-1"  disabled aria-disabled="true" -->
                     </li>
+                    <?php }else{ ?> 
+                    <li class="nav-item">
+                        <a class="nav-link <?php if(uri_string()=='mi_perfil')echo "active";?>" href="<?=base_url('cuenta');?>">Mi cuenta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?=base_url('cerrar_sesion');?>" >Cerrar Sesi&oacute;n</a> <!-- tabindex="-1"  disabled aria-disabled="true" -->
+                    </li>
+                    
+                    <?php } ?>
                 </ul>
                 <form action="<?= base_url('Buscar');?>" class="form-inline my-2 my-lg-0">
                     <input name="texto_busqueda" class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
@@ -30,3 +39,4 @@
                 </form>
             </div>
         </nav>
+        

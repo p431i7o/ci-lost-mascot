@@ -31,10 +31,20 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Inicio::index');
-$routes->get('/registro', 'Inicio::form_registro');
 $routes->get('/legal', 'Inicio::legal');
-$routes->post('/registrar_cuenta','Inicio::registrar_cuenta');
-$routes->get('/registrar_cuenta','Inicio::form_registro');
+
+$routes->get('/Buscar','Buscador::buscar');
+$routes->post('/Buscar','Buscador::buscar');
+
+$routes->get('/registro', 'Usuario::form_registro');
+$routes->post('/registrar_cuenta','Usuario::registrar_cuenta');
+$routes->get('/registrar_cuenta','Usuario::form_registro');
+$routes->get('/activacion_cuenta',"Usuario::activacion_cuenta");
+$routes->get('/sesion','Usuario::form_sesion');
+$routes->post('/sesion','Usuario::iniciar_sesion');
+$routes->get('/cerrar_sesion','Usuario::cerrar_sesion');
+
+$routes->get('/cuenta','Usuario::dashboard');
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {

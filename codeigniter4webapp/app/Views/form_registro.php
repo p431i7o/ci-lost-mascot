@@ -111,7 +111,7 @@ echo $this->section('content'); ?>
         </p>
     </div>
     
-    <form method="POST" class=" col-md-5 form-signin needs-validation accordion" novalidate action="<?=base_url('registrar_cuenta');?>" >
+    <form id="demo-form" method="POST" class=" col-md-5 form-signin needs-validation accordion" action="<?=base_url('registrar_cuenta');?>" >
 
         <?= csrf_field() ?>
             <!-- <div class="">
@@ -127,6 +127,18 @@ echo $this->section('content'); ?>
 
             <?php
         } ?>
+
+        <?php 
+            if(isset($success)){
+                if($success){
+                    ?><div class="alert-info">Se ha registrado correctamente!<br/>
+                        Ahora debe revisar su correo para activar la cuenta.</div><?php
+                }else{
+                    ?><div class="alert-warning">Se ha producido un error al guardar sus datos.
+                        Favor escribanos un email a <?=env('email_soporte');?> con los datos que ha cargado en el formulario.</div><?php
+                }
+            }
+        ?>
         <div class="form-label-group">
             <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required autofocus>
             <label for="nombre">Nombre Completo</label>
@@ -170,11 +182,25 @@ echo $this->section('content'); ?>
                 }
             ?>
         </div>
-        
-        <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button>
+        <?php 
+                if (isset($validation) && $validation->hasError('g-recaptcha-response'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('g-recaptcha-response').'</div>';
+                }
+            ?>
+        <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button> -->
+        <button class="g-recaptcha btn btn-lg btn-primary btn-block" 
+        data-sitekey="<?=env('captcha_public');?>" 
+        data-callback='onSubmit' 
+        data-action='submit'>Registrarme</button>
         
     </form>
   </div>
 </div>
-
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
 <?php echo $this->endSection() ?>
