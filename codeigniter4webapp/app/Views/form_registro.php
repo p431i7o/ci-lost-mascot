@@ -5,7 +5,7 @@ echo $this->section('content'); ?>
     
 .form-signin {
   width: 100%;
-  max-width: 420px;
+  max-width: 920px;
   padding: 15px;
   margin: auto;
 }
@@ -98,18 +98,7 @@ echo $this->section('content'); ?>
 </div>
 <div class="container">
     <div class="row">
-    <div class="col-5 py-5 text-justify">
-        
-        <p class="lead text-justify">
-            ¿Por qu&eacute; pedimos que se registre?
-            <br/>
-            Es para que se pueda garantizar que tengamos ciertos datos, que permitan que ocurra una comunicaci&oacute;n entre los que buscan y encuentran a las mascotas.
-        <br/>
-            <!-- No estamos afiliados con ning&uacute;n grupo de ninguna clase, nuestra &uacute;nica intenci&oacute;n es ayudar a que los animalitos que anden perdidos, puedan regresar a sus hogares. -->
-        <br/>
-            Si bien hacemos nuestro mejor esfuerzo, en cuidar los datos que ustedes con confianza nos proveen, le rogamos no reutilizar su contrase&ntilde;a, escriba una que sea &uacute;nica para este sitio, que tenga al menos 6 caracteres y  procure usar n&uacute;meros y letras en MAY&Uacute;SCULAS y min&uacute;sculas as&iacute; como s&iacute;mbolos especiales para que la contrase&ntilde;a sea lo mas segura posible.
-        </p>
-    </div>
+    
     
     <form id="demo-form" method="POST" class=" col-md-5 form-signin needs-validation accordion" action="<?=base_url('registrar_cuenta');?>" >
 
@@ -195,6 +184,18 @@ echo $this->section('content'); ?>
         data-action='submit'>Registrarme</button>
         
     </form>
+    <div class=" py-5 text-justify">
+        
+        <p class="lead text-justify">
+            ¿Por qu&eacute; pedimos que se registre?
+            <br/>
+            Es para que se pueda garantizar que tengamos ciertos datos, que permitan que ocurra una comunicaci&oacute;n entre los que buscan y encuentran a las mascotas.
+        <br/>
+            <!-- No estamos afiliados con ning&uacute;n grupo de ninguna clase, nuestra &uacute;nica intenci&oacute;n es ayudar a que los animalitos que anden perdidos, puedan regresar a sus hogares. -->
+        <br/>
+            Si bien hacemos nuestro mejor esfuerzo, en cuidar los datos que ustedes con confianza nos proveen, le rogamos no reutilizar su contrase&ntilde;a, escriba una que sea &uacute;nica para este sitio, que tenga al menos 6 caracteres y  procure usar n&uacute;meros y letras en MAY&Uacute;SCULAS y min&uacute;sculas as&iacute; como s&iacute;mbolos especiales para que la contrase&ntilde;a sea lo mas segura posible.
+        </p>
+    </div>
   </div>
 </div>
 <script src="https://www.google.com/recaptcha/api.js"></script>

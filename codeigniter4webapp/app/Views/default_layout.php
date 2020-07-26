@@ -1,36 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Mascotas Perdidas</title>
         <!-- CSS only -->
-    <link   rel="stylesheet" 
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
-            crossorigin="anonymous">
-
-
+        <link   rel="stylesheet" href="<?=base_url('/assets/dist/css/bootstrap.css');?>">
     </head>
-    <body>
-        <?= view('navbar'); ?>
-        <?= $this->renderSection('content') ?>
-        <!-- JS, Popper.js, and jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
-                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" 
-                crossorigin="anonymous">
-                    
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
-                crossorigin="anonymous">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" 
-                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" 
-                crossorigin="anonymous">
-        </script>
-        <div class="jumbotron">
+    <body class="d-flex flex-column h-100">
+        <header>
+            <?= view('navbar'); ?>
+        </header>
+        <main role="main" class="flex-shrink-0">
+
+            <?= $this->renderSection('content') ?>
+
+        </main>
+        <footer class="footer mt-auto py-3">
             <div class="container">
-                Mascotas Perdidas Py  -  <?= date('Y'); ?> Todos los derechos reservados
+                <span class="text-muted">
+                    Mascotas Perdidas Py  -  <?= date('Y'); ?> Todos los derechos reservados
+                </span>
             </div>
-        </div>
+        </footer>
+        <script src="<?=base_url('/assets/jquery-3.5.1.min.js');?>"></script>
+        <script src="<?=base_url('/assets/dist/js/bootstrap.min.js');?>" ></script>
     </body>
 </html>

@@ -156,7 +156,7 @@ Gracias por unirte a una noble causa!</p>
             if(count($result)>0){
                 $this->session->set('sesion_iniciada',true);
                 $this->session->set('usuario',$result[0]);
-                return redirect()->to('/inicio');
+                return redirect()->to('/cuenta');
             }else{
                 $this->session->setFlashData('error','Credenciales Invalidas');
                 return redirect()->to('/sesion');
@@ -171,5 +171,23 @@ Gracias por unirte a una noble causa!</p>
 
     public function dashboard(){
         return view('dashboard');
+    }
+
+    public function mis_mensajes(){
+        return view('dashboard_mensajes');   
+    }
+
+    public function mis_reportes(){
+        return view('dashboard_reportes');
+    }
+
+    public function nuevo_reporte(){
+        // return view('dashboard_form_reporte');
+
+        $errores = $this->session->getFlashdata();
+        return view('dashboard_form_reporte',[
+            'errores'=>$errores,
+            'session'=>$this->session,
+            'validation' => $this->validator]);
     }
 }

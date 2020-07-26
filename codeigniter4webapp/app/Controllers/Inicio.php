@@ -10,10 +10,6 @@ class Inicio extends BaseController
         return view('Inicio');
     }
 
-    
-
-    
-
     public function legal(){
         return view('legal');
     }
