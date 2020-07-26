@@ -170,24 +170,41 @@ Gracias por unirte a una noble causa!</p>
     }
 
     public function dashboard(){
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
         return view('dashboard');
     }
 
     public function mis_mensajes(){
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
         return view('dashboard_mensajes');   
     }
 
     public function mis_reportes(){
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
         return view('dashboard_reportes');
     }
 
     public function nuevo_reporte(){
-        // return view('dashboard_form_reporte');
-
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
         $errores = $this->session->getFlashdata();
         return view('dashboard_form_reporte',[
             'errores'=>$errores,
             'session'=>$this->session,
             'validation' => $this->validator]);
     }
+
+    private function revisarSesion(){
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
+    }
+
 }

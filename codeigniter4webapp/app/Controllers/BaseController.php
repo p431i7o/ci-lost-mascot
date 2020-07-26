@@ -44,4 +44,12 @@ class BaseController extends Controller
 		// $this->session = \Config\Services::session();
 	}
 
+    public function estaConSesionAbierta(){
+        //var_dump(empty($this->session->get('session_iniciada')));die();
+        if(!empty($this->session->get('sesion_iniciada')) ){
+            return true;
+        }
+        return false;
+    }
+
 }
