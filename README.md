@@ -1,2 +1,2 @@
 # ci-lost-mascot
-Otra prueba de proyecto de mascotas perdidas, pero con codeigniter
+Proyecto para el sitio de MascotasPerdidasPy.org
