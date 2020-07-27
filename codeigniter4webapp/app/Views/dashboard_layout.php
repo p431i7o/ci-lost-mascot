@@ -31,6 +31,19 @@
         </style>
         <!-- Custom styles for this template -->
         <link href="<?=base_url('/assets/dashboard.css');?>" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+        <script src="<?=base_url('assets/dist/js/bootstrap.bundle.js');?>"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> -->
+        <!-- <script src="<?=base_url('/assets/dashboard.js');?>"></script> -->
+        <!-- Calendar: https://www.jqueryscript.net/time-clock/Compact-Highly-Configurable-jQuery-Datepicker-Plugin-Zebra-Datepicker.html -->
+        
+        <script src="<?=base_url('assets/calendar/zebra_datepicker.min.js');?>"></script>
+        <!-- Default theme -->
+        <!-- <link rel="stylesheet" href="<?=base_url('assets/calendar/css/default/zebra_datepicker.css');?>"> -->
+        <!-- Metallic theme -->
+        <link rel="stylesheet" href="<?=base_url('assets/calendar/css/metallic/zebra_datepicker.css');?>">
     </head>
     <body>
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -64,13 +77,5 @@
                 </main>
             </div>
         </div>
-        
-
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-        <script src="<?=base_url('assets/dist/js/bootstrap.bundle.js');?>"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> -->
-        <!-- <script src="<?=base_url('/assets/dashboard.js');?>"></script> -->
     </body>
 </html>

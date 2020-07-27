@@ -179,6 +179,11 @@ echo $this->section('content') ?>
             ?>
         </div>
 
+        <div class="col-md-11 mb-3">
+            <label for="reporte_fecha"><strong>Fecha en la que se extravi&oacute;/Encontr&oacute; al animal*</strong></label><br/>
+            <input type="text" style="border:1px solid #ced4da;padding: 6px 12px; border-radius: 0.25rem;" name="reporte_fecha" id="reporte_fecha">
+        </div>
+
 
         <div class="col-md-11 mb-3">
             <label for="reporte_mascota_nombre"><strong>Nombre de la mascota</strong></label>
@@ -193,7 +198,7 @@ echo $this->section('content') ?>
         </div>
         <div class="col-md-11 mb-3">
             <label for="reporte_descripcion"><strong>Descripci&oacute;n*</strong></label>
-            <textarea placeholder="Describa datos del animal, caracteristicas únicas, donde se perdió/encontró" id="reporte_descripcion" class="form-control" required></textarea>
+            <textarea placeholder="Describa datos del animal, caracteristicas únicas, donde se perdió/encontró" name="reporte_descripcion" id="reporte_descripcion" class="form-control" required></textarea>
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_descripcion'))
                 {
@@ -248,6 +253,8 @@ function validarYGuardar(){
     var latitud = $('#latitud').val();
     var longitud = $('#longitud').val();
 
+    var reporte_fecha = $('#reporte_fecha').val();
+
     var errores = []
     if(tipo_reporte==null || tipo_reporte ==""){
         esValido = false;
@@ -262,6 +269,11 @@ function validarYGuardar(){
     if(reporte_descripcion==null || reporte_descripcion ==""){
         esValido = false;
         errores.push('<li>Debe cargar una descripción</li>');
+    }
+
+    if(reporte_fecha==null || reporte_fecha ==""){
+        esValido = false;
+        errores.push('<li>Debe cargar la fecha en la que se encontró/perdió el animal</li>');
     }
 
     if(latitud==null || latitud == "" || longitud == null || longitud == ""){
@@ -279,5 +291,14 @@ function validarYGuardar(){
 
 
 }
+$( document ).ready(function() {
+    $('#reporte_fecha').Zebra_DatePicker({
+        months:['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'],
+        format:'Y-m-d',
+        first_day_of_week:0,
+        default_position:'below',
+        days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+    });
+});
 </script>
 <?php echo $this->endSection() ?>
