@@ -190,16 +190,7 @@ Gracias por unirte a una noble causa!</p>
         return view('dashboard_reportes');
     }
 
-    public function nuevo_reporte(){
-        if(!$this->estaConSesionAbierta()){
-            return redirect()->to('/inicio'); 
-        }
-        $errores = $this->session->getFlashdata();
-        return view('dashboard_form_reporte',[
-            'errores'=>$errores,
-            'session'=>$this->session,
-            'validation' => $this->validator]);
-    }
+    
 
     private function revisarSesion(){
         if(!$this->estaConSesionAbierta()){

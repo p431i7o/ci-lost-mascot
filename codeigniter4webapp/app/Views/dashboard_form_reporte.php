@@ -117,7 +117,7 @@ echo $this->section('content') ?>
 <div class="row">
 <!-- <div class="container"> -->
     <!-- <div class="row"> -->
-        <form id="demo-form" method="POST" class="form-signin needs-validation accordion" action="<?=base_url('cuenta/reporte/nuevo');?>" >
+        <form id="form-reporte" method="POST" class="form-signin needs-validation accordion" action="<?=base_url('cuenta/reportes/nuevo');?>" >
         <?= csrf_field() ?>
         <?php if($session->getFlashdata('error')){
             ?>
@@ -145,23 +145,43 @@ echo $this->section('content') ?>
         ?>
 
         <div class="col-md-11 mb-3">
-             <label for="tipo_reporte">Tipo de reporte</label>
+             <label for="tipo_reporte"><strong>Tipo de reporte*</strong></label>
             <select name="tipo_reporte" id="tipo_reporte" class="custom-select d-block w-100">
                 <option value="Perdido">Mascota Perdida</option>
                 <option value="Encontrado">Mascota Encontrada</option>
             </select>
+            
+            
+            <?php 
+                if (isset($validation) && $validation->hasError('tipo_reporte'))
+                {
+                    echo '<div class="alert-danger">'.$validation->getError('tipo_reporte').'</div>';
+                }
+            ?>
+        </div>
+        <div class="col-md-11 mb-3">
+             <label for="tipo_reporte"><strong>Tipo de animal*</strong></label>
+             
+            <select name="id_tipo_animal" id="id_tipo_animal" class="custom-select d-block w-100">
+                <?php 
+                    foreach($tipos_animales as $tipo_animal){
+                        echo "<option value=\"$tipo_animal->id_tipo_animal\">$tipo_animal->tipo_animal_descripcion</option>";
+                    }
+                ?>
+            </select>
             <!-- <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required autofocus> -->
             
             <?php 
-                if (isset($validation) && $validation->hasError('usuario_nombre'))
+                if (isset($validation) && $validation->hasError('id_tipo_animal'))
                 {
-                    echo '<div class="alert-danger">'.$validation->getError('usuario_nombre').'</div>';
+                    echo '<div class="alert-danger">'.$validation->getError('id_tipo_animal').'</div>';
                 }
             ?>
         </div>
 
+
         <div class="col-md-11 mb-3">
-            <label for="reporte_mascota_nombre">Nombre de la mascota</label>
+            <label for="reporte_mascota_nombre"><strong>Nombre de la mascota</strong></label>
             <input name="reporte_mascota_nombre" type="text" id="reporte_mascota_nombre" class="form-control" placeholder="Si es un rescate puede dejar en blanco" required autofocus>
             
             <?php 
@@ -172,8 +192,8 @@ echo $this->section('content') ?>
             ?>
         </div>
         <div class="col-md-11 mb-3">
-            <label for="reporte_descripcion">Descripci&oacute;n</label>
-            <textarea id="reporte_descripcion" class="form-control" required></textarea>
+            <label for="reporte_descripcion"><strong>Descripci&oacute;n*</strong></label>
+            <textarea placeholder="Describa datos del animal, caracteristicas únicas, donde se perdió/encontró" id="reporte_descripcion" class="form-control" required></textarea>
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_descripcion'))
                 {
@@ -182,11 +202,11 @@ echo $this->section('content') ?>
             ?>
         </div>
         <div>
-            <label for="mascota_nombre">Ubicaci&oacute;n</label>
+            <label for=""><strong>Ubicaci&oacute;n*</strong></label>
             <button type="button" class="btn btn-dark btn-lg btn-block" onclick="send_marker()">Marcar posici&oacute;n en el mapa</button>
             
-                <input class="form-control" type="hidden" name="latitud" id="latitud" value="" placeholder="click en el mapa"/>
-                <input class="form-control" type="hidden" name="longitud" id="longitud" value="" placeholder="click en el mapa"/>
+                <input class="form-control" type="text" name="latitud" id="latitud" value="" placeholder="click en el mapa"/>
+                <input class="form-control" type="text" name="longitud" id="longitud" value="" placeholder="click en el mapa"/>
             
 
             
@@ -194,7 +214,7 @@ echo $this->section('content') ?>
         </div>
         <div class="col-md-11 mb-3">
             <label for="reporte_direccion">Direcci&oacute;n</label>
-            <input name="reporte_direccion" type="text" id="reporte_direccion" class="form-control" placeholder="Si lo desea puede escribir una direccion precisa aqui" required autofocus>
+            <input name="reporte_direccion" type="text" id="reporte_direccion" class="form-control" placeholder="Si lo desea puede escribir aquí calle y número, sino deje en blanco" required autofocus>
             
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_direccion'))
@@ -202,6 +222,10 @@ echo $this->section('content') ?>
                     echo '<div class="alert-danger">'.$validation->getError('reporte_direccion').'</div>';
                 }
             ?>
+        </div>
+        <div>
+            <div class="alert-warning d-none" id="errores"></div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="validarYGuardar();">Guardar</button>
         </div>
     </form>
     <!-- </div> -->
@@ -211,9 +235,49 @@ echo $this->section('content') ?>
 //     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 // }).addTo(map);
-function send_marker ()
-        {
-            marker_point_map(event, ((gps_active)? DEFAULT_ZOOM_MARKER : DEFAULT_ZOOM_MAP))
-        }
+function send_marker (){
+    marker_point_map(event, ((gps_active)? DEFAULT_ZOOM_MARKER : DEFAULT_ZOOM_MAP))
+}
+
+function validarYGuardar(){
+    var esValido = true;
+    var tipo_reporte = $('#tipo_reporte').val();
+    var tipo_animal = $('#id_tipo_animal').val();
+    var reporte_mascota_nombre = $('#reporte_mascota_nombre').val();
+    var reporte_descripcion = $('#reporte_descripcion').val();
+    var latitud = $('#latitud').val();
+    var longitud = $('#longitud').val();
+
+    var errores = []
+    if(tipo_reporte==null || tipo_reporte ==""){
+        esValido = false;
+        errores.push('<li>Debe elegir un tipo de reporte</li>');
+    }
+
+    if(tipo_animal==null || tipo_animal ==""){
+        esValido = false;
+        errores.push('<li>Debe elegir un tipo de animal</li>');
+    }
+
+    if(reporte_descripcion==null || reporte_descripcion ==""){
+        esValido = false;
+        errores.push('<li>Debe cargar una descripción</li>');
+    }
+
+    if(latitud==null || latitud == "" || longitud == null || longitud == ""){
+        esValido = false;
+        errores.push("<li>Debe elegir un punto en el mapa</li>");
+    }
+
+    if(!esValido){
+        $('#errores').html('<ul>'+(errores.join(' '))+'</ul>');
+        $('#errores').removeClass('d-none');
+    }else{
+        $('#errores').addClass('d-none');
+        $('#form-reporte').submit();
+    }
+
+
+}
 </script>
 <?php echo $this->endSection() ?>

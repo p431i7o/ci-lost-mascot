@@ -47,8 +47,9 @@ $routes->get('/cerrar_sesion','Usuario::cerrar_sesion');
 $routes->get('/cuenta','Usuario::dashboard');
 $routes->get('/cuenta/mensajes','Usuario::mis_mensajes');
 $routes->get('/cuenta/reportes','Usuario::mis_reportes');
-$routes->get('/cuenta/reportes/nuevo','Usuario::nuevo_reporte');
-$routes->post('/cuenta/reportes/nuevo','Usuario::registrar_reporte');
+
+$routes->get('/cuenta/reportes/nuevo','Reporte::nuevo_reporte');
+$routes->post('/cuenta/reportes/nuevo','Reporte::registrar_reporte');
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {
