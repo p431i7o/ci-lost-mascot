@@ -210,8 +210,8 @@ echo $this->section('content') ?>
             <label for=""><strong>Ubicaci&oacute;n*</strong></label>
             <button type="button" class="btn btn-dark btn-lg btn-block" onclick="send_marker()">Marcar posici&oacute;n en el mapa</button>
             
-                <input class="form-control" type="text" name="latitud" id="latitud" value="" placeholder="click en el mapa"/>
-                <input class="form-control" type="text" name="longitud" id="longitud" value="" placeholder="click en el mapa"/>
+                <input class="form-control" type="hidden" name="latitud" id="latitud" value="" placeholder="click en el mapa"/>
+                <input class="form-control" type="hidden" name="longitud" id="longitud" value="" placeholder="click en el mapa"/>
             
 
             

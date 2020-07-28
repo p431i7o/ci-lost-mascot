@@ -37,6 +37,7 @@ class BaseController extends Controller
 		parent::initController($request, $response, $logger);
         $this->session = \Config\Services::session();
         $this->request = $request;
+        $this->db = \Config\Database::connect();
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------

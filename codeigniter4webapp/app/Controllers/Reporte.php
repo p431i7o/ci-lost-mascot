@@ -29,24 +29,57 @@ class Reporte extends BaseController
         $rules = ['tipo_reporte'=>'required',
                   'id_tipo_animal'=>'required',
                   'reporte_descripcion'=>'required',
-                  'reporte_fecha'=>'required',
-                  'reporte_mascota_nombre'=>'',
-                  'latitud'=>'required',
-                  'longitud'=>'required',
-                  'reporte_direccion'=>''];
+                  'reporte_fecha'=>'required|max_length[10]',
+                  'reporte_mascota_nombre'=>'max_length[50]',
+                  'latitud'=>'required|max_length[20]',
+                  'longitud'=>'required|max_length[20]',
+                  'reporte_direccion'=>'max_length[200]'];
 
         $mensajes = [
-            'usuario_nombre'=>[
-                'required'=>'El campo Nombre es requerido',
+            'reporte_mascota_nombre'=>[
                 'max_length'=>'El campo Nombre puede tener un max de {param} caracteres'
                 //@todo agregar las demas etiquetas para registro
             ]
         ];
 
         $success = false;
-
+        
         if($this->validate($rules,$mensajes)){
+            $modelReporte = new \App\Models\ReporteModel();
+            $DptoDistritoCiudad = $modelReporte->getDepartamentoCiudadDistritoByLatLong($this->request->getPost('latitud'),$this->request->getPost('longitud'));
+            $result = $DptoDistritoCiudad->getResult();
+            // var_dump($result);
+            if(count($result)>=0){
+                $row = $result[0];
+                $departamento = $row->departamento_id;
+                $ciudad = $row->ciudad_id;
+                $distrito = $row->distrito_id;
+                $barrio = $row->barrio_id;
 
+            }else{
+                $departamento = null;
+                $ciudad = null;
+                $distrito = null;
+                $barrio = null;
+            }
+            $data = [
+                'id_usuario'=>$this->session->get('usuario')->id_usuario,
+                'reporte_mascota_nombre'=>$this->request->getPost('reporte_mascota_nombre'),
+                'id_tipo_animal'=>$this->request->getPost('id_tipo_animal'),
+
+                'tipo_reporte'=> $this->request->getPost('tipo_reporte'),
+                'reporte_fecha'=>$this->request->getPost('reporte_fecha'),
+                'reporte_descripcion'=>$this->request->getPost('reporte_descripcion'),
+                'latitud'=>$this->request->getPost('latitud'),
+                'longitud'=>$this->request->getPost('longitud'),
+                'reporte_vencimiento'=>date('Y-m-d H:i:s',time()+env('DIAS_VENCIMIENTO')*24*3600),
+                'reporte_direccion'=>$this->request->getPost('reporte_direccion'),
+                'departamento_id'=>$departamento,
+                'ciudad_id'=>$ciudad,
+                'distrito_id'=>$distrito,
+                'barrio_id'=>$barrio
+            ];
+            $success = $modelReporte->insert($data);
         }
 
 
