@@ -121,7 +121,7 @@ echo $this->section('content') ?>
         <?= csrf_field() ?>
         <?php if($session->getFlashdata('error')){
             ?>
-            <div class="alert-warning"><?= $session->getFlashdata('error'); ?></div>
+            <div class="alert alert-warning"><?= $session->getFlashdata('error'); ?></div>
 
             <?php
         } ?>
@@ -130,13 +130,13 @@ echo $this->section('content') ?>
             if(isset($success)){
                 if($success){
                     ?>
-                    <div class="alert-info">
+                    <div class="alert alert-info">
                         Se ha guardado correctamente su reporte!
                     </div>
                     <?php
                 }else{
                     ?>
-                    <div class="alert-warning">
+                    <div class="alert alert-warning">
                         Se ha producido un error al guardar sus datos.
                         Favor escribanos un email a <?=env('email_soporte');?> con los datos que ha cargado en el formulario.
                     </div><?php
@@ -174,7 +174,7 @@ echo $this->section('content') ?>
             <?php 
                 if (isset($validation) && $validation->hasError('id_tipo_animal'))
                 {
-                    echo '<div class="alert-danger">'.$validation->getError('id_tipo_animal').'</div>';
+                    echo '<div class="alert alert-danger">'.$validation->getError('id_tipo_animal').'</div>';
                 }
             ?>
         </div>
@@ -192,7 +192,7 @@ echo $this->section('content') ?>
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_mascota_nombre'))
                 {
-                    echo '<div class="alert-danger">'.$validation->getError('reporte_mascota_nombre').'</div>';
+                    echo '<div class="alert alert-danger">'.$validation->getError('reporte_mascota_nombre').'</div>';
                 }
             ?>
         </div>
@@ -202,7 +202,7 @@ echo $this->section('content') ?>
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_descripcion'))
                 {
-                    echo '<div class="alert-danger">'.$validation->getError('reporte_descripcion').'</div>';
+                    echo '<div class="alert alert-danger">'.$validation->getError('reporte_descripcion').'</div>';
                 }
             ?>
         </div>
@@ -224,7 +224,7 @@ echo $this->section('content') ?>
             <?php 
                 if (isset($validation) && $validation->hasError('reporte_direccion'))
                 {
-                    echo '<div class="alert-danger">'.$validation->getError('reporte_direccion').'</div>';
+                    echo '<div class="alert alert-danger">'.$validation->getError('reporte_direccion').'</div>';
                 }
             ?>
         </div>
@@ -233,7 +233,7 @@ echo $this->section('content') ?>
             <input class="form-control-file" type="file" name="imagenes[]" multiple="multiple" /> 
         </div>
         <div>
-            <div class="alert-warning d-none" id="errores"></div>
+            <div class="alert alert-warning d-none" id="errores"></div>
             <button type="button" class="btn btn-primary btn-lg btn-block" onclick="validarYGuardar();">Guardar</button>
         </div>
     </form>
