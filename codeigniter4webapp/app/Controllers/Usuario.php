@@ -183,12 +183,7 @@ Gracias por unirte a una noble causa!</p>
         return view('dashboard_mensajes');   
     }
 
-    public function mis_reportes(){
-        if(!$this->estaConSesionAbierta()){
-            return redirect()->to('/inicio'); 
-        }
-        return view('dashboard_reportes');
-    }
+    
 
     
 

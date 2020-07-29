@@ -46,10 +46,11 @@ $routes->get('/cerrar_sesion','Usuario::cerrar_sesion');
 
 $routes->get('/cuenta','Usuario::dashboard');
 $routes->get('/cuenta/mensajes','Usuario::mis_mensajes');
-$routes->get('/cuenta/reportes','Usuario::mis_reportes');
+$routes->get('/cuenta/reportes','Reporte::mis_reportes');
 
 $routes->get('/cuenta/reportes/nuevo','Reporte::nuevo_reporte');
 $routes->post('/cuenta/reportes/nuevo','Reporte::registrar_reporte');
+$routes->get('/reporte/getImagen/(:any)/(:alpha)','Reporte::getImagenReporte/$1/$2');
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {

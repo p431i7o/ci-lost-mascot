@@ -115,8 +115,7 @@ echo $this->section('content') ?>
 <h1 class="h2">Dashboard - Nuevo reporte</h1>
 </div>
 <div class="row">
-<!-- <div class="container"> -->
-    <!-- <div class="row"> -->
+
         <form id="form-reporte" method="POST" enctype="multipart/form-data" class="form-signin needs-validation accordion" action="<?=base_url('cuenta/reportes/nuevo');?>" >
         <?= csrf_field() ?>
         <?php if($session->getFlashdata('error')){
@@ -169,7 +168,6 @@ echo $this->section('content') ?>
                     }
                 ?>
             </select>
-            <!-- <input name="usuario_nombre" type="text" id="nombre" class="form-control" placeholder="Nombre Completo" required autofocus> -->
             
             <?php 
                 if (isset($validation) && $validation->hasError('id_tipo_animal'))
@@ -240,10 +238,8 @@ echo $this->section('content') ?>
     <!-- </div> -->
 <!-- </div> -->
 <script type="text/javascript">
-//     var map = L.map('mapid').setView([51.505, -0.09], 13);
-//     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-// }).addTo(map);
+
+
 function send_marker (){
     marker_point_map(event, ((gps_active)? DEFAULT_ZOOM_MARKER : DEFAULT_ZOOM_MAP))
 }

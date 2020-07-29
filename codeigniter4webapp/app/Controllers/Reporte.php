@@ -48,7 +48,7 @@ class Reporte extends BaseController
             $modelReporte = new \App\Models\ReporteModel();
             $DptoDistritoCiudad = $modelReporte->getDepartamentoCiudadDistritoByLatLong($this->request->getPost('latitud'),$this->request->getPost('longitud'));
             $result = $DptoDistritoCiudad->getResult();
-            // var_dump($result);
+
             if(count($result)>=0){
                 $row = $result[0];
                 $departamento = $row->departamento_id;
@@ -63,10 +63,9 @@ class Reporte extends BaseController
                 $barrio = null;
             }
             $data = [
-                'id_usuario'=>$this->session->get('usuario')->id_usuario,
+                'id_usuario'=>$this->getIdUsuarioActual(),
                 'reporte_mascota_nombre'=>$this->request->getPost('reporte_mascota_nombre'),
                 'id_tipo_animal'=>$this->request->getPost('id_tipo_animal'),
-
                 'tipo_reporte'=> $this->request->getPost('tipo_reporte'),
                 'reporte_fecha'=>$this->request->getPost('reporte_fecha'),
                 'reporte_descripcion'=>$this->request->getPost('reporte_descripcion'),
@@ -83,8 +82,7 @@ class Reporte extends BaseController
             $success = $modelReporte->insert($data);
             if($success){
                 $id_reporte = $modelReporte->db->insertID();
-                // var_dump($id_reporte);
-                // var_dump($this->request->getFiles());
+
                 if($imagefile = $this->request->getFiles())
                 {
                    foreach($imagefile['imagenes'] as $img)
@@ -103,18 +101,12 @@ class Reporte extends BaseController
                                 'imagen_miniatura'=>'thumb_'.$newName,
                                 'imagen_reporte_nombre'=>$newName
                            ];
-
-
                            $modelReporte->db->table('imagenes_reportes')->insert($data_img);
-
                            $img->move(WRITEPATH.'reportes', $newName);
-
                            $image = \Config\Services::image()
-                                   ->withFile(WRITEPATH.'reportes/'.$newName)
-                                   // ->fit(env('MINIATURA_ANCHO'), null, 'center')
-                                   ->resize(env('MINIATURA_ANCHO'),env('MINIATURA_ALTO'),true)
-                                   ->save(WRITEPATH.'reportes/thumb_'.$newName);
-
+                               ->withFile(WRITEPATH.'reportes/'.$newName)
+                               ->resize(env('MINIATURA_ANCHO'),env('MINIATURA_ALTO'),true)
+                               ->save(WRITEPATH.'reportes/thumb_'.$newName);
 
                       }
                    }
@@ -131,5 +123,52 @@ class Reporte extends BaseController
             'session'=>$this->session,
             'validation' => $this->validator,
             'success'=>$success]);
+    }
+
+    public function mis_reportes(){
+        if(!$this->estaConSesionAbierta()){
+            return redirect()->to('/inicio'); 
+        }
+
+        $modelReporte = new \App\Models\ReporteModel();
+        
+        $query_reporte = $modelReporte->getReportesUsuario($this->getIdUsuarioActual() );
+        // print_r($query_reporte->getResult());die();
+        $reportes = $query_reporte->getResult();
+        foreach($reportes as $index=> $fila){
+            $reportes[$index]->imagenes_reporte = $modelReporte->getImagenesReporte($fila->id_reporte)->getResult();
+        }
+
+        return view('dashboard_reportes',['reportes'=>$reportes]);
+    }
+
+    public function getImagenReporte($nombre,$miniatura){
+       $modelReporte = new \App\Models\ReporteModel();
+       $registro_query = $modelReporte
+            ->db
+            ->table('imagenes_reportes')
+            ->where('imagen_reporte_nombre',$nombre)
+            ->orWhere('imagen_miniatura',$nombre)
+            ->get();
+
+        // var_dump($registro_query->getResult());die();
+        if(count($registro_query->getResult()) >0){
+            $registro = $registro_query->getResult()[0];//first();
+            if($miniatura=='thumb'){
+                $archivo = $registro->imagen_miniatura;
+            }else{
+                $archivo = $registro->imagen_reporte_nombre;
+            }
+            $mime = $registro->imagen_mime;
+            $filename = $registro->imagen_reporte_archivo;
+        }else{
+            $mime = 'image/png';
+            $archivo = 'error.png';
+            $filename = $archivo;
+        }
+        header('Content-type:'.$mime);
+        header('Content-Disposition: inline; filename="'.$filename.'"');
+        echo file_get_contents(WRITEPATH.'reportes/'.$archivo);
+        die();
     }
 }

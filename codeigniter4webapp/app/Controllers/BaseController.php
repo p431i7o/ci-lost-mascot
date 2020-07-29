@@ -53,4 +53,8 @@ class BaseController extends Controller
         return false;
     }
 
+    public function getIdUsuarioActual(){
+        return $this->session->get('usuario')->id_usuario;
+    }
+
 }
