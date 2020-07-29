@@ -26,6 +26,9 @@ email_soporte=
 captcha_public=
 captcha_secret=
 
+DIAS_VENCIMIENTO=7
+MINIATURA_ANCHO=150
+
 EMAIL_PROTOCOL=smtp
 EMAIL_HOST=smtp.mailtrap.io
 EMAIL_PORT=2525

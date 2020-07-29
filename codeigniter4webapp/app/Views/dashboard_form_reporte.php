@@ -117,7 +117,7 @@ echo $this->section('content') ?>
 <div class="row">
 <!-- <div class="container"> -->
     <!-- <div class="row"> -->
-        <form id="form-reporte" method="POST" class="form-signin needs-validation accordion" action="<?=base_url('cuenta/reportes/nuevo');?>" >
+        <form id="form-reporte" method="POST" enctype="multipart/form-data" class="form-signin needs-validation accordion" action="<?=base_url('cuenta/reportes/nuevo');?>" >
         <?= csrf_field() ?>
         <?php if($session->getFlashdata('error')){
             ?>
@@ -228,6 +228,10 @@ echo $this->section('content') ?>
                 }
             ?>
         </div>
+        <div class="col-md-11 mb-3">
+            <label>Hasta 3 Im&aacute;genes</label> <br/>
+            <input class="form-control-file" type="file" name="imagenes[]" multiple="multiple" /> 
+        </div>
         <div>
             <div class="alert-warning d-none" id="errores"></div>
             <button type="button" class="btn btn-primary btn-lg btn-block" onclick="validarYGuardar();">Guardar</button>
@@ -279,6 +283,12 @@ function validarYGuardar(){
     if(latitud==null || latitud == "" || longitud == null || longitud == ""){
         esValido = false;
         errores.push("<li>Debe elegir un punto en el mapa</li>");
+    }
+
+    var $fileUpload = $("input[type='file']");
+    if (parseInt($fileUpload.get(0).files.length)>3){
+        esValido = false;
+        errores.push("<li>3 Imágenes es el límite de imágenes a subir</li>");
     }
 
     if(!esValido){

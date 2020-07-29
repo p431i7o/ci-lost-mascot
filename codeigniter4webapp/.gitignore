@@ -50,7 +50,7 @@ Vagrantfile
 #-------------------------
 writable/cache/*
 !writable/cache/index.html
-
+writable/reportes/*
 writable/logs/*
 !writable/logs/index.html
 
@@ -118,7 +118,7 @@ nb-configuration.xml
 *.sublime-project
 .phpintel
 /api/
-
+db-schemas-data/mascotas_perdidas.mwb.bak
 # Visual Studio Code
 .vscode/
 

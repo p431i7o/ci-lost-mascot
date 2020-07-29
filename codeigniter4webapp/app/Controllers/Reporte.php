@@ -79,7 +79,47 @@ class Reporte extends BaseController
                 'distrito_id'=>$distrito,
                 'barrio_id'=>$barrio
             ];
+
             $success = $modelReporte->insert($data);
+            if($success){
+                $id_reporte = $modelReporte->db->insertID();
+                // var_dump($id_reporte);
+                // var_dump($this->request->getFiles());
+                if($imagefile = $this->request->getFiles())
+                {
+                   foreach($imagefile['imagenes'] as $img)
+                   {
+                      if ($img->isValid() && ! $img->hasMoved())
+                      {
+                           $newName = $img->getRandomName();
+                           
+
+                           $data_img = [
+                                'id_reporte'=>$id_reporte,
+                                'imagen_reporte_archivo'=>$img->getName(),
+                                'imagen_reporte_fecha'=>date('Y-m-d H:i:s'),
+                                'imagen_reporte_estado'=>'Activo',
+                                'imagen_mime'=>$img->getMimeType(),
+                                'imagen_miniatura'=>'thumb_'.$newName,
+                                'imagen_reporte_nombre'=>$newName
+                           ];
+
+
+                           $modelReporte->db->table('imagenes_reportes')->insert($data_img);
+
+                           $img->move(WRITEPATH.'reportes', $newName);
+
+                           $image = \Config\Services::image()
+                                   ->withFile(WRITEPATH.'reportes/'.$newName)
+                                   // ->fit(env('MINIATURA_ANCHO'), null, 'center')
+                                   ->resize(env('MINIATURA_ANCHO'),env('MINIATURA_ALTO'),true)
+                                   ->save(WRITEPATH.'reportes/thumb_'.$newName);
+
+
+                      }
+                   }
+                }
+            }
         }
 
 
