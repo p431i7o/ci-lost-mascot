@@ -154,6 +154,7 @@ echo $this->section('content'); ?>
                     }
                 ?>
             <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button> -->
+            <a href="#">Olvid&eacute; mi contrase&ntilde;a</a>
             <button class="g-recaptcha btn btn-lg btn-primary btn-block" 
             data-sitekey="<?=env('captcha_public');?>" 
             data-callback='onSubmit' 
