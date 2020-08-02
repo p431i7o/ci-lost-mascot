@@ -93,13 +93,13 @@ echo $this->section('content'); ?>
 </style>
 <div class="container">
     <div class="row text-center">
-        <h4 class="display-3 text-center">Inicio de Sesi&oacute;n</h4>
+        <h4 class="display-3 text-center">Recuperar Cuenta</h4>
     </div>
 </div>
 <div class="container">
     <div class="row">
 
-        <form id="demo-form" method="POST" class="form-signin needs-validation accordion" action="<?=base_url('sesion');?>" >
+        <form id="demo-form" method="POST" class="form-signin needs-validation accordion" action="<?=base_url('recuperar_cuenta');?>" >
 
             <?= csrf_field() ?>
                 <!-- <div class="">
@@ -136,29 +136,11 @@ echo $this->section('content'); ?>
                     }
                 ?>
               </div>
-
-            <div class="form-label-group">
-                <input type="password" id="usuario_password" name="usuario_password" class="form-control" placeholder="Contrase&ntilde;" required>
-                <label for="usuario_password">Contrase&ntilde;a</label>
-                <?php 
-                    if (isset($validation) && $validation->hasError('usuario_password'))
-                    {
-                        echo '<div class="alert alert-danger">'.$validation->getError('usuario_password').'</div>';
-                    }
-                ?>
-            </div>
-            <?php 
-                    if (isset($validation) && $validation->hasError('g-recaptcha-response'))
-                    {
-                        echo '<div class="alert alert-danger">'.$validation->getError('g-recaptcha-response').'</div>';
-                    }
-                ?>
-            <!-- <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="validarYEnviar();">Registrarme</button> -->
-            <a href="<?=base_url('recuperar_cuenta');?>">Olvid&eacute; mi contrase&ntilde;a</a>
+            
             <button class="g-recaptcha btn btn-lg btn-primary btn-block" 
             data-sitekey="<?=env('captcha_public');?>" 
             data-callback='onSubmit' 
-            data-action='submit'>Iniciar Sesi&oacute;n</button>
+            data-action='submit'>Enviar confirmaci&oacute;n al mail</button>
                     
         </form>
     </div>

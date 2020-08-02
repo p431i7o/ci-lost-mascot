@@ -133,8 +133,8 @@ class Reporte extends BaseController
         $modelReporte = new \App\Models\ReporteModel();
         
         $query_reporte = $modelReporte->getReportesUsuario($this->getIdUsuarioActual() );
-        // print_r($query_reporte->getResult());die();
         $reportes = $query_reporte->getResult();
+
         foreach($reportes as $index=> $fila){
             $reportes[$index]->imagenes_reporte = $modelReporte->getImagenesReporte($fila->id_reporte)->getResult();
         }
@@ -144,16 +144,11 @@ class Reporte extends BaseController
 
     public function getImagenReporte($nombre,$miniatura){
        $modelReporte = new \App\Models\ReporteModel();
-       $registro_query = $modelReporte
-            ->db
-            ->table('imagenes_reportes')
-            ->where('imagen_reporte_nombre',$nombre)
-            ->orWhere('imagen_miniatura',$nombre)
-            ->get();
+       $registro_query = $modelReporte->getImagenPorNombre($nombre);
+            
 
-        // var_dump($registro_query->getResult());die();
         if(count($registro_query->getResult()) >0){
-            $registro = $registro_query->getResult()[0];//first();
+            $registro = $registro_query->getResult()[0];
             if($miniatura=='thumb'){
                 $archivo = $registro->imagen_miniatura;
             }else{
@@ -170,5 +165,9 @@ class Reporte extends BaseController
         header('Content-Disposition: inline; filename="'.$filename.'"');
         echo file_get_contents(WRITEPATH.'reportes/'.$archivo);
         die();
+    }
+
+    public function getReporteLista(){
+        
     }
 }

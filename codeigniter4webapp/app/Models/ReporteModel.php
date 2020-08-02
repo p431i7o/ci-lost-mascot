@@ -93,4 +93,25 @@ class ReporteModel extends Model
             ->get();
     }
 
+    public function getReportes($limit=10,$offset=0){
+        return $this->select('dp.departamento_nombre,d.distrito_nombre,b.barrio_nombre,c.ciudad_nombre,reportes.*')
+            ->join('ciudades c','c.ciudad_id = reportes.ciudad_id','left')
+            ->join('distritos d','d.distrito_id = reportes.distrito_id','left')
+            ->join('departamentos dp','dp.departamento_id = reportes.departamento_id','left')
+            ->join('barrios b','b.barrio_id = reportes.barrio_id','left')
+            ->where('reporte_vencimiento > now()' )
+            ->where('reporte_estado','Activo')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+    }
+
+    public function getImagenPorNombre($nombre){
+        return $this->db
+            ->table('imagenes_reportes')
+            ->where('imagen_reporte_nombre',$nombre)
+            ->orWhere('imagen_miniatura',$nombre)
+            ->get();
+    }
+
 }

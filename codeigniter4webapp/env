@@ -23,6 +23,8 @@ CI_ENVIRONMENT = production
 app.baseURL = 'https://www.mascotasperdidaspy.org/'
 salt=
 email_soporte=
+email_noresponder = no-responder@servidor.com
+email_noresponder_nombre = 'No Responder'
 captcha_public=
 captcha_secret=
 

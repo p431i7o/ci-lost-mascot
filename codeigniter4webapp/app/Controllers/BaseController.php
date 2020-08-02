@@ -57,4 +57,49 @@ class BaseController extends Controller
         return $this->session->get('usuario')->id_usuario;
     }
 
+    /**
+     * Enviar email
+     * @param  array/string  $destinatarios Arreglo de destinatarios, puede ser un string tambien
+     * @param  string $asunto        Asunto del email
+     * @param  array  $remitente     Remitente del email
+     * @param  string $mensaje       String que contiene el mensaje
+     * @param  array  $adjuntos      Si hay adjuntos, van aca
+     * @return boolean               True si se pudo enviar, false de lo contrario
+     */
+    public function enviarEmail($destinatarios=array(),
+                                $asunto="",
+                                $remitente=array("email"=>"no-responder@mascotasperdidaspy.org","nombre"=>"No Responder"),
+                                $mensaje="",
+                                $adjuntos=array()){
+        //@todo trabajar sobre adjuntos
+        if(!is_array($destinatarios)){
+            $destinatarios = [$destinatarios];
+        }
+        $config = Array(
+          'protocol' => env('EMAIL_PROTOCOL'),
+          'SMTPHost' => env('EMAIL_HOST'),
+          'SMTPPort' => env('EMAIL_PORT'),
+          'SMTPUser' => env('EMAIL_USER'),
+          'SMTPCrypto'=>env('EMAIL_CRYPTO'),
+          'SMTPPass' => env('EMAIL_PASS'),
+          'CRLF' => "\r\n",
+          'newline' => "\r\n",
+          'mailType'=>env('EMAIL_MAILTYPE')
+        );
+        $email = \Config\Services::email($config);
+
+        $email->setFrom($remitente['email'], $remitente['nombre']);
+        foreach($destinatarios as $destinatario){
+            $email->setTo($destinatario);    
+        }        
+        // $email->setCC('another@another-example.com');
+        // $email->setBCC('them@their-example.com');
+
+        $email->setSubject($asunto);
+        $email->setMessage($mensaje);
+
+        return $email->send();
+#       echo $email->printDebugger();
+    }
+
 }
