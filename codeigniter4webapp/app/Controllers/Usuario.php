@@ -97,6 +97,70 @@ class Usuario extends BaseController
             'session'=>$this->session,
             'validation' => $this->validator]);
     }
+
+    public function recuperar_cuenta_paso3($email_hasheado,$hash_recuperacion){
+        // print_r([$email_hasheado,$hash_recuperacion]);
+
+        $db = \Config\Database::connect();
+        $result = $db->table('usuarios')
+                    ->where("md5( concat('".env('salt')."',usuario_email)) = ".$db->escape($email_hasheado)
+                        ." and usuario_hash_recuperacion = ".$db->escape($hash_recuperacion))
+                    ->get()
+                    ->getResult();
+        // print_r($result->getResult());die();
+        if(count($result) > 0){
+            $parametrosVista = ['email_hasheado'=>$email_hasheado,'hash_recuperacion'=>$hash_recuperacion,'session'=>$this->session,
+            'validation' => $this->validator];
+            // if($this->session->getFlashdata('validator')){
+            //     $this->validator->setError('password')
+            // }
+            return view('form_cambio_contrasenha',$parametrosVista);
+        }else{
+            $this->session->setFlashData('mensaje','Datos de recuperación de cuenta inválidos');
+            $this->session->setFlashData('error',true);
+            return redirect()->to('/Inicio');
+        }
+    }
+
+    public function recuperar_cuenta_paso4(){
+         helper(['form', 'url']);
+         $rules = [ 
+            'usuario_password' => 'required|min_length[6]',
+            'usuario_password2' => 'required|min_length[6]|matches[usuario_password]',
+            'email_hasheado'=>'required',
+            'hash_recuperacion'=>'required',
+            'g-recaptcha-response'=>'required|validateRecaptcha'
+        ];
+
+        $mensajes = [
+            'usuario_password'=>[
+                'required'=>'El campo Contraseña es requerido',
+                'min_length'=>'El campo Contraseña debe tener un mínimo de {param} caracteres'
+            ],
+            'usuario_password2'=>[
+                'required'=>'El campo Repetir Contraseña es requerido',
+                'min_length'=>'El campo Repetir Contraseña debe tener un mínimo de {param} caracteres',
+                'matches'=>'El campo Repetir Contraseña debe coincidir'
+            ]
+        ];
+
+        if(! $this->validate($rules,$mensajes))
+        {
+            return  redirect()->back()->with('error',$this->validator->getErrors());
+        }else{
+            $db = \Config\Database::connect();
+            $result = $db->table('usuarios')
+                        ->where("md5( concat('".env('salt')."',usuario_email)) = ".$db->escape($this->request->getPost('email_hasheado'))
+                            ." and usuario_hash_recuperacion = ".$db->escape($this->request->getPost('hash_recuperacion')))
+                        ->set('usuario_password',md5(env('salt').$this->request->getPost('usuario_password')))
+                        ->set('usuario_hash_recuperacion',md5(env('salt'.microtime() ) ))
+                        ->update();
+            $this->session->setFlashData('mensaje','Cambio de contraseña correcto!');
+            return redirect()->to('/Inicio');
+        }
+
+    }
+
     /**
      * [form_sesion description]
      * @return [type] [description]
