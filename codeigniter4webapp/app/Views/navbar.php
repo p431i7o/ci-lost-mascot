@@ -12,6 +12,9 @@
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='ayuda')echo "active";?>" href="<?= base_url('ayuda'); ?>">Ayuda</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php if(strpos(uri_string(),'reporte/lista')!==false)echo "active";?>" href="<?= base_url('reporte/lista'); ?>">Reportes de Mascotas</a>
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link <?php if(uri_string()=='legal')echo "active";?>" href="<?= base_url('legal'); ?>">Legal</a>

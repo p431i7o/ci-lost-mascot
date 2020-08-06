@@ -272,7 +272,7 @@ Gracias por unirte a una noble causa!</p>
                 'required'=>'El campo Nombre es requerido'
             ],
             'usuario_password'=>[
-                'required'=>'El campo Nombre es requerido'
+                'required'=>'El campo Contraseña es requerido'
             ]
         ];
 

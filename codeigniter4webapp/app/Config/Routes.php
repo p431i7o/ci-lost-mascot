@@ -56,6 +56,9 @@ $routes->get('/cuenta/reportes/nuevo','Reporte::nuevo_reporte');
 $routes->post('/cuenta/reportes/nuevo','Reporte::registrar_reporte');
 $routes->get('/reporte/getImagen/(:any)/(:alpha)','Reporte::getImagenReporte/$1/$2');
 
+$routes->get('/reporte/lista/(:num?)','Reporte::getReporteLista/$1');
+$routes->get('/reporte/lista','Reporte::getReporteLista');
+
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {
     // $routes->get('usuarios', 'Usuarios::index');

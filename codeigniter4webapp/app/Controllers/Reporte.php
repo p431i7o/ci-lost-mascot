@@ -167,7 +167,17 @@ class Reporte extends BaseController
         die();
     }
 
-    public function getReporteLista(){
-        
+    public function getReporteLista($pagina=1){
+        if(is_nan($pagina) ||  $pagina<1){
+            $pagina=1;
+        }
+        $modelReporte = new \App\Models\ReporteModel();
+        $reportes = $modelReporte->getReportes()->getResult();
+
+        foreach($reportes as $indice => $valor){
+            $reportes[$indice]->imagenes_reporte = $modelReporte->getImagenesReporte($valor->id_reporte)->getResult();
+        }
+        // print_r(   );
+        return view('listado_reportes',['pagina'=>$pagina,'reportes'=>$reportes]);
     }
 }
