@@ -55,11 +55,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar" aria-label="Buscar">
+            <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar" aria-label="Buscar"> -->
 
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="<?=base_url('cerrar_sesion');?>">Cerrar Sesion</a>
+                    <a class="nav-link" href="<?=base_url('cerrar_sesion');?>">Cerrar Sesi&oacute;n</a>
                 </li>
             </ul>
         </nav>
@@ -71,6 +71,16 @@
 
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <?php if(isset($mensaje)){
+                            if(isset($error)){
+                               echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                            }else{
+                                echo "<div class='alert alert-info' alert-dismissible fade show' role='alert'>";
+                            }
+                            echo $mensaje;
+                            echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+                            echo "</div>";
+                        }?>
                         <?= $this->renderSection('content') ?>
 
                     </div>

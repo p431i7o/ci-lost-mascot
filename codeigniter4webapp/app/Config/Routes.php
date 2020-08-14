@@ -58,6 +58,7 @@ $routes->get('/reporte/getImagen/(:any)/(:alpha)','Reporte::getImagenReporte/$1/
 
 $routes->get('/reporte/lista/(:num?)','Reporte::getReporteLista/$1');
 $routes->get('/reporte/lista','Reporte::getReporteLista');
+$routes->get('/reporte/renovarUnaSemana/(:num?)','Reporte::renovarUnaSemana/$1');
 
 $routes->group('/api', ['namespace' => 'App\Controllers\API'], function($routes)
 {

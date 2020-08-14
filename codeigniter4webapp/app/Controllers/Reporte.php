@@ -139,7 +139,14 @@ class Reporte extends BaseController
             $reportes[$index]->imagenes_reporte = $modelReporte->getImagenesReporte($fila->id_reporte)->getResult();
         }
 
-        return view('dashboard_reportes',['reportes'=>$reportes]);
+        $parametrosVista = ['reportes'=>$reportes];
+        if(!empty($this->session->getFlashdata('mensaje')) ){
+            $parametrosVista['mensaje'] = $this->session->getFlashdata('mensaje');
+            if(!empty($this->session->getFlashdata('error'))){
+                $parametrosVista['error'] = true;
+            }
+        }
+        return view('dashboard_reportes',$parametrosVista);
     }
 
     public function getImagenReporte($nombre,$miniatura){
@@ -179,5 +186,24 @@ class Reporte extends BaseController
         }
         // print_r(   );
         return view('listado_reportes',['pagina'=>$pagina,'reportes'=>$reportes]);
+    }
+
+    public function renovarUnaSemana($id_reporte){
+        $id_usuario = $this->getIdUsuarioActual();
+        $modelReporte = new \App\Models\ReporteModel();
+
+        $actualizacion = $modelReporte->where('id_usuario',$id_usuario)
+            ->where('id_reporte',$id_reporte)
+            ->set('reporte_vencimiento',date('Y-m-d H:i:s',time()+24*7*3600))
+            ->set('reporte_fecha_actualizacion',date('Y-m-d H:i:s'))
+            ->update();
+        if($actualizacion){
+            $this->session->setFlashData('mensaje','Actualización correcta!');
+            return redirect()->to('/cuenta/reportes');
+        }else{
+            $this->session->setFlashData('error',true);
+            $this->session->setFlashData('mensaje','Error en la actualización del registro!');
+            return redirect()->to('/cuenta/reportes');
+        }
     }
 }
